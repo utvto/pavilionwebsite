@@ -1,0 +1,59 @@
+reader.onload=function(e){
+    const newImageSrc=e.target.result;
+    const card=document.createElement('div');
+    card.className='product-card';
+    card.innerHTML=<img src="${newImageSrc}" alt="${nameAr}" style="width:100%; border-radius:10px;">
+    <h3>${currentLang==='ar'?nameAr:nameEn}</h3>
+    <p>${currentLang==='ar'?'السعر':'Price'}: ${price} د.ع</p>
+    <button onclick="addToCart('${nameAr}', '${price}')">${currentLang==='ar'?'أضف للسلة':'Add to Cart'}</button>;
+    productList.appendChild(card);
+    document.getElementById('newNameAr').value='';
+    document.getElementById('newNameEn').value='';
+    document.getElementById('newPrice').value='';
+    document.getElementById('newImage').value='';
+    alert(currentLang==='ar'?"تم إضافة المنتج بنجاح!":"Product added successfully!");
+  };
+  reader.readAsDataURL(imageInput.files[0]);
+}
+
+function addToCart(name, price){cartItems.push({name, price}); renderCart();}
+function renderCart(){cartDiv.innerHTML=''; cartItems.forEach((item,index)=>{cartDiv.innerHTML+=<p>${item.name} - ${item.price} د.ع <button onclick="removeCart(${index})">${currentLang==='ar'?'حذف':'Remove'}</button></p>;});}
+function removeCart(index){cartItems.splice(index,1); renderCart();}
+function checkout(){if(cartItems.length===0){alert(currentLang==='ar'?"السلة فارغة!":"Cart is empty!"); return;}
+let message=(currentLang==='ar'?"أريد حجز هذه المنتجات:\n":"I want to order these products:\n");
+cartItems.forEach(item=>{message+=${item.name} - ${item.price} د.ع\n;});
+window.open(https://wa.me/9647712715130?text=${encodeURIComponent(message)},"_blank");}
+
+function scrollToTop(){window.scrollTo({top:0, behavior:"smooth"});}
+
+function switchLang(lang){
+  currentLang=lang;
+  if(lang==='ar'){
+    document.documentElement.dir='rtl';
+    document.getElementById('home-title').innerText='مرحبا بكم في مركز Pavilion لصيانة اللابتوبات';
+    document.getElementById('home-text').innerText='أفضل خدمة صيانة وبيع قطع غيار وإكسسوارات للابتوبات والكيمنك.';
+    document.getElementById('services-title').innerText='خدماتنا';
+    document.getElementById('services-list').innerHTML='<li>صيانة جميع أنواع اللابتوبات</li><li>تبديل الشاشة والكيبورد والبطارية</li><li>تنظيف داخلي ومعالجة ارتفاع الحرارة</li>';
+    document.getElementById('products-title').innerText='منتجاتنا';
+    document.getElementById('cart-title').innerText='سلة مشترياتك';
+    document.getElementById('checkout-btn').innerText='احجز الآن';
+    document.getElementById('admin-title').innerText='لوحة إدارة المنتجات';
+    document.getElementById('contact-title').innerText='اتصل بنا';
+    document.getElementById('backToTop').innerText='⬆ العودة لأعلى';
+  }else{
+    document.documentElement.dir='ltr';
+    document.getElementById('home-title').innerText='Welcome to Pavilion Laptop Repair Center';
+    document.getElementById('home-text').innerText='Best repair service, selling laptop parts and gaming accessories.';
+    document.getElementById('services-title').innerText='Our Services';
+    document.getElementById('services-list').innerHTML='<li>Repair all types of laptops</li><li>Screen, keyboard, battery replacement</li><li>Internal cleaning and overheating solutions</li>';
+    document.getElementById('products-title').innerText='Our Products';
+    document.getElementById('cart-title').innerText='Your Cart';
+    document.getElementById('checkout-btn').innerText='Order Now';
+    document.getElementById('admin-title').innerText='Product Management Panel';
+    document.getElementById('contact-title').innerText='Contact Us';
+    document.getElementById('backToTop').innerText='⬆ Back to Top';
+  }
+}
+</script>
+</body>
+</html>
